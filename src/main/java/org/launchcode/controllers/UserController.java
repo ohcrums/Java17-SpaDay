@@ -13,7 +13,7 @@ public class UserController {
 
     @GetMapping("/add")
     public String displayAddUserForm(Model model) {
-        model.addAttribute(new User());
+        model.addAttribute("user", new User());
         return "user/add";
     }
 
@@ -23,15 +23,17 @@ public class UserController {
 //        model.addAttribute("verify", verify);
 //        model.addAttribute("username", user.getUsername());
 //        model.addAttribute("email", user.getEmail());
+        model.addAttribute(user);
+        System.out.println("POINT ONE:  " + errors);
+
         if (errors.hasErrors()) {
-            System.out.println(errors);
+            System.out.println("POINT TWO:  " + errors);
+
             model.addAttribute("errorMsg", "big error business");
             return "user/add";
-        }
-        if (user.getPassword().equals(verify)) {
+        } else if (user.getPassword().equals(verify)) {
             return "user/index";
-        }
-        else {
+        } else {
             model.addAttribute("errorMsg", "Passwords do not match");
             return "user/add";
         }
