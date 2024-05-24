@@ -2,6 +2,7 @@ package org.launchcode.models;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class User {
@@ -17,6 +18,9 @@ public class User {
     @Size(min = 6, max = 20)
     private String password;
 
+    @NotNull(message = "Passwords do not match")
+    private String verifyPassword;
+
     public User() {
 
     }
@@ -26,6 +30,12 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    private void checkPassword() {
+        if (this.password != null && this.verifyPassword != null && !this.password.equals(this.verifyPassword)) {
+            this.verifyPassword = null;
+        }
     }
 
     public String getUsername() {
@@ -50,6 +60,16 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+        checkPassword();
+    }
+
+    public String getVerifyPassword() {
+        return verifyPassword;
+    }
+
+    public void setVerifyPassword(String verifyPassword) {
+        this.verifyPassword = verifyPassword;
+        checkPassword();
     }
 }
 
