@@ -17,28 +17,17 @@ public class UserController {
         return "user/add";
     }
 
-    @PostMapping
-    public String processAddUserForm(@ModelAttribute @Valid User user, Model model, String verify, Errors errors) {
-//        model.addAttribute("user", user);
-//        model.addAttribute("verify", verify);
-//        model.addAttribute("username", user.getUsername());
-//        model.addAttribute("email", user.getEmail());
-        model.addAttribute(user);
-        System.out.println("POINT ONE:  " + errors);
-
+    @PostMapping("/add")
+    public String processAddUserForm(@ModelAttribute @Valid User user, Errors errors, Model model, String verify) {
         if (errors.hasErrors()) {
-            System.out.println("POINT TWO:  " + errors);
-
-            model.addAttribute("errorMsg", "big error business");
+            model.addAttribute(errors);
             return "user/add";
         } else if (user.getPassword().equals(verify)) {
             return "user/index";
         } else {
-            model.addAttribute("errorMsg", "Passwords do not match");
+            model.addAttribute("noMatch", "Passwords do not match");
             return "user/add";
         }
-
-
     }
 
 

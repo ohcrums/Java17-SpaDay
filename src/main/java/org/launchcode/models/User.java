@@ -6,15 +6,15 @@ import jakarta.validation.constraints.Size;
 
 public class User {
 
-    @Size(min = 5, max = 15)
     @NotBlank
+    @Size(min = 5, max = 15)
     private String username;
 
     @Email
     private String email;
 
-    @Size(min = 6)
     @NotBlank
+    @Size(min = 6, max = 20)
     private String password;
 
     public User() {
